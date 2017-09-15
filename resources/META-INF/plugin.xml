@@ -1,0 +1,29 @@
+<idea-plugin>
+    <id>com.fooock.experimental.and.beta.icons</id>
+    <name>Icons for experimental and beta things</name>
+    <version>1.0.0</version>
+    <vendor email="nhitbh@gmail.com" url="http://www.fooock.com">fooock</vendor>
+
+    <description><![CDATA[
+        IDE icons for <b>experimental</b> and <b>beta</b> Java classes and functions<br>
+        At this moment we detect the @Experimental and @Beta annotations
+    ]]></description>
+
+    <change-notes><![CDATA[
+        First release
+    ]]>
+    </change-notes>
+
+    <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
+    <idea-version since-build="145.0"/>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <codeInsight.lineMarkerProvider language="JAVA"
+                                        implementationClass="com.fooock.experimental.and.beta.icons.LineMarker"/>
+    </extensions>
+
+    <actions>
+        <!-- Add your actions here -->
+    </actions>
+
+</idea-plugin>
