@@ -1,8 +1,22 @@
 # IDE icons for experimental and beta Java things
-This is an IntelliJ/Android Studio IDE plugin to detect the code annotated with 
+[![License](https://img.shields.io/badge/License-Apache%202.0-brightgreen.svg)](https://opensource.org/licenses/Apache-2.0)
+
+This is an IntelliJ/Android Studio IDE plugin to detect the code with 
 **@Experimental** and **@Beta** annotations and show a custom icon on the gutter
 when you use it.
 
+## Why would I want to use this plugin?
+We are developers, and we write hundreds of lines of code and use tons 
+of libraries each day. How many of these libraries contain beta and 
+experimental classes and functions?. Which is the answer?. 
+Well, you've probably never thought of that, but I can tell you that there are **many!**
+
+You don't trust me? Take a look to [RxJava](https://github.com/ReactiveX/RxJava) (I :cupid: RxJava). 
+You are probably using **beta** and **experimental** functions/classes in your
+production code and you don't know it! 
+
+With this plugin you know when you are using a beta or experimental piece of 
+code
 
 ## License
 ```
