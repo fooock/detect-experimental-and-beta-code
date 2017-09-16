@@ -71,20 +71,30 @@ public final class LineMarker implements LineMarkerProvider {
         // at this point we can check if the existing annotations match
         for (PsiAnnotation annotation : annotationsFromMethod) {
             final String qualifiedName = annotation.getQualifiedName();
-            if (qualifiedName == null || qualifiedName.isEmpty()) {
-                continue;
-            }
+            if (qualifiedName == null || qualifiedName.isEmpty()) continue;
             final int index = qualifiedName.lastIndexOf(".");
             // if index is equal to -1, then check directly in the qualified name contain
             // Experimental or Beta
             if (index == -1) {
+                if (!isAnnotationKnow(qualifiedName)) continue;
                 return markerFromAnnotationName(qualifiedName, psiElement);
             }
             // Remove from the final annotation name the '.' (index + 1)
             final String annotationName = qualifiedName.substring(index + 1, qualifiedName.length()).trim();
+            if (!isAnnotationKnow(annotationName)) continue;
             return markerFromAnnotationName(annotationName, psiElement);
         }
         return null;
+    }
+
+    /**
+     * @param annotationName Current annotation
+     * @return True if the annotation is know, false if not.
+     * @see #BETA_ANNOTATION_NAME
+     * @see #EXPERIMENTAL_ANNOTATION_NAME
+     */
+    private boolean isAnnotationKnow(String annotationName) {
+        return annotationName.equals(EXPERIMENTAL_ANNOTATION_NAME) || annotationName.equals(BETA_ANNOTATION_NAME);
     }
 
     /**
@@ -118,7 +128,7 @@ public final class LineMarker implements LineMarkerProvider {
      */
     @NotNull
     private LineMarkerInfo<PsiElement> createLineMarkerFor(@NotNull PsiElement element, @NotNull Icon icon) {
-        return new LineMarkerInfo<>(element, element.getTextRange(), icon, Pass.UPDATE_ALL,
+        return new LineMarkerInfo<>(element, element.getTextRange(), icon, Pass.LINE_MARKERS,
                 null, null, GutterIconRenderer.Alignment.LEFT);
     }
 
