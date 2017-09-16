@@ -18,10 +18,18 @@ production code and you don't know it!
 With this plugin you know when you are using a beta or experimental piece of 
 code
 
+## How it works?
+The operation of this plugin is very simple, it reads the code of the file that is currently
+open and if it finds an annotation that is called `Experimental` or `Beta` it paints an icon
+in the IDE gutter. That's all!
+
+Is important to note that the annotation package name is ignored. Using this behavior allows us to
+always display the icons, regardless of the library that is being used to annotate our code. Do you 
+have any question? [Ask here](https://github.com/fooock/detect-experimental-and-beta-code/issues)
+
 ## Icons
 The icons used by this plugin are from the github markdown emoji markup. I 
 found in [this repo](https://gist.github.com/rxaviers/7360908) a complete list.
-
 For the detected `@Experimental` annotations the :boom: icon is used, and for
 the `@Beta` annotation the :fire: icon is used.
 
