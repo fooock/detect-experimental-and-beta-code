@@ -1,4 +1,4 @@
-# IDE icons for experimental and beta Java things
+# IDE icons for experimental and beta Java annotations
 [![License](https://img.shields.io/badge/License-Apache%202.0-brightgreen.svg)](https://opensource.org/licenses/Apache-2.0)
 
 This is an IntelliJ/Android Studio IDE plugin to detect the code with 
