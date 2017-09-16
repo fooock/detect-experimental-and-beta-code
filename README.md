@@ -7,6 +7,11 @@ when you use it.
 
 ![](media/example_with_rxjava.gif)
 
+Note that the method `switchMapSingle()` is annotated with the `io.reactivex.annotations.Experimental`
+annotation. Another example of function annotated with a custom `Beta` annotation:
+
+![](media/example_beta.gif)
+
 ## Why would I want to use this plugin?
 We are developers, and we write hundreds of lines of code and use tons 
 of libraries each day. How many of these libraries contain beta and 
@@ -34,6 +39,11 @@ The icons used by this plugin are from the github markdown emoji markup. I
 found in [this repo](https://gist.github.com/rxaviers/7360908) a complete list.
 For the detected `@Experimental` annotations the :boom: icon is used, and for
 the `@Beta` annotation the :fire: icon is used.
+
+## Credits
+To create the gifs for this readme I used the online service from [cloudconvert](https://cloudconvert.com/webm-to-gif).
+For the video record I use the [Icecream apps screen recorder](https://icecreamapps.com/Screen-Recorder/) application.
+Thanks!
 
 ## License
 ```
