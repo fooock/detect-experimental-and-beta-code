@@ -1,14 +1,15 @@
 package com.fooock.experimental.and.beta.icons;
 
+import com.intellij.codeHighlighting.Pass;
 import com.intellij.codeInsight.daemon.LineMarkerInfo;
 import com.intellij.codeInsight.daemon.LineMarkerProvider;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiMethod;
-import com.intellij.psi.PsiParameter;
-import com.intellij.psi.PsiReferenceExpression;
+import com.intellij.openapi.editor.markup.GutterIconRenderer;
+import com.intellij.openapi.util.IconLoader;
+import com.intellij.psi.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import javax.swing.*;
 import java.util.Collection;
 import java.util.List;
 
@@ -21,6 +22,14 @@ public final class LineMarker implements LineMarkerProvider {
     // --------------
     // https://www.jetbrains.org/intellij/sdk/docs/tutorials/custom_language_support/line_marker_provider.html
 
+    private static final String EXPERIMENTAL_ANNOTATION_NAME = "Experimental";
+    private static final String BETA_ANNOTATION_NAME = "Beta";
+
+    private static final Icon ICON_EXPERIMENTAL_ANNOTATION = IconLoader.getIcon("/icons/explosion.png");
+    private static final Icon ICON_BETA_ANNOTATION = IconLoader.getIcon("/icons/fire.png");
+
+    private static final PsiAnnotation[] EMPTY_ANNOTATION_ARRAY = new PsiAnnotation[0];
+
     @Nullable
     @Override
     public LineMarkerInfo getLineMarkerInfo(@NotNull PsiElement psiElement) {
@@ -28,19 +37,119 @@ public final class LineMarker implements LineMarkerProvider {
         if (isMethodParameters(psiElement)) {
             final PsiParameter[] methodParams = getParametersFrom(psiElement);
             for (PsiParameter parameter : methodParams) {
-                // detect annotations by parameter
-            }
-        }
-        // check if the element is a reference with method
-        if (isReferenceWithMethod(psiElement)) {
-            final PsiMethod method = getMethodFrom(psiElement);
-            // detect annotation by method
-            final PsiParameter[] parameters = getParametersFrom(method);
-            for (PsiParameter parameter : parameters) {
                 // detect annotation by parameter
             }
         }
+
+        // check if the element is a reference with method. Note that if the method reference
+        // find an annotation, this method don't continue, if not, check the method params
+        if (isReferenceWithMethod(psiElement)) {
+            final PsiMethod method = getMethodFrom(psiElement);
+            final PsiAnnotation[] annotationsFromMethod = getAnnotationsFrom(method);
+
+            // if no annotations found return quickly!
+            if (!hasAnnotations(annotationsFromMethod)) {
+                return null;
+            }
+            return getLineMarkerInfo(psiElement, annotationsFromMethod);
+        }
         return null;
+    }
+
+    /**
+     * This method get the line marker for the current element when is know that it has annotations. If the
+     * annotations found are know, this is, {@link #EXPERIMENTAL_ANNOTATION_NAME} or {@link #BETA_ANNOTATION_NAME},
+     * the icon for each one is shown. If the annotations not match any of these two, this method return null
+     *
+     * @param psiElement            Current element
+     * @param annotationsFromMethod Array of annotations from the element. Always more than zero
+     * @return LineMarkerInfo if find know annotation or null if not found
+     */
+    @Nullable
+    private LineMarkerInfo getLineMarkerInfo(@NotNull PsiElement psiElement,
+                                             @NotNull PsiAnnotation[] annotationsFromMethod) {
+        // at this point we can check if the existing annotations match
+        for (PsiAnnotation annotation : annotationsFromMethod) {
+            final String qualifiedName = annotation.getQualifiedName();
+            if (qualifiedName == null || qualifiedName.isEmpty()) {
+                continue;
+            }
+            final int index = qualifiedName.lastIndexOf(".");
+            // if index is equal to -1, then check directly in the qualified name contain
+            // Experimental or Beta
+            if (index == -1) {
+                return markerFromAnnotationName(qualifiedName, psiElement);
+            }
+            // Remove from the final annotation name the '.' (index + 1)
+            final String annotationName = qualifiedName.substring(index + 1, qualifiedName.length()).trim();
+            return markerFromAnnotationName(annotationName, psiElement);
+        }
+        return null;
+    }
+
+    /**
+     * Get the {@link LineMarkerInfo} for the given annotation type if is any of {@link #EXPERIMENTAL_ANNOTATION_NAME}
+     * or {@link #BETA_ANNOTATION_NAME}, otherwise this method return null
+     *
+     * @param annotationName Annotation name
+     * @param element        Current element
+     * @return LineMarkerInfo of null
+     */
+    @Nullable
+    private LineMarkerInfo markerFromAnnotationName(@NotNull String annotationName, @NotNull PsiElement element) {
+        if (EXPERIMENTAL_ANNOTATION_NAME.equals(annotationName)) {
+            // here return the line marker with the specified experimental icon
+            return createLineMarkerFor(element, ICON_EXPERIMENTAL_ANNOTATION);
+        }
+        if (BETA_ANNOTATION_NAME.equals(annotationName)) {
+            // here return the line marker with the specified beta icon
+            return createLineMarkerFor(element, ICON_BETA_ANNOTATION);
+        }
+        return null;
+    }
+
+    /**
+     * Create the {@link LineMarkerInfo} for the given {@link PsiElement} with the required {@link Icon}. This
+     * method never return null. Note that the line marker is aligned always to the left
+     *
+     * @param element Current element
+     * @param icon    Icon for the required annotation
+     * @return LineMarkerInfo
+     */
+    @NotNull
+    private LineMarkerInfo<PsiElement> createLineMarkerFor(@NotNull PsiElement element, @NotNull Icon icon) {
+        return new LineMarkerInfo<>(element, element.getTextRange(), icon, Pass.UPDATE_ALL,
+                null, null, GutterIconRenderer.Alignment.LEFT);
+    }
+
+    /**
+     * Check if in the given array has more than zero elements
+     *
+     * @param annotations Array if annotations
+     * @return True if more than zero elements, false otherwise
+     */
+    private boolean hasAnnotations(@NotNull PsiAnnotation[] annotations) {
+        return annotations.length > 0;
+    }
+
+    /**
+     * Get the current {@link PsiAnnotation}s from the given elements. Note that this method can return
+     * empty elements
+     *
+     * @param psiElement Current element
+     * @return Array of annotations from element if exists, empty if not
+     */
+    private PsiAnnotation[] getAnnotationsFrom(PsiElement psiElement) {
+        if (psiElement instanceof PsiModifierListOwner) {
+            final PsiModifierListOwner modifierListOwner = (PsiModifierListOwner) psiElement;
+            final PsiModifierList modifiers = modifierListOwner.getModifierList();
+            // modifiers can be null
+            if (modifiers == null) {
+                return EMPTY_ANNOTATION_ARRAY;
+            }
+            return modifiers.getAnnotations();
+        }
+        return EMPTY_ANNOTATION_ARRAY;
     }
 
     /**
@@ -60,7 +169,7 @@ public final class LineMarker implements LineMarkerProvider {
      * @param psiElement Current element
      * @return The method parameters
      */
-    private PsiParameter[] getParametersFrom(PsiElement psiElement) {
+    private PsiParameter[] getParametersFrom(@NotNull PsiElement psiElement) {
         return ((PsiMethod) psiElement).getParameterList().getParameters();
     }
 
@@ -88,7 +197,7 @@ public final class LineMarker implements LineMarkerProvider {
      * @param psiElement Current element
      * @return The method of the current reference
      */
-    private PsiMethod getMethodFrom(PsiElement psiElement) {
+    private PsiMethod getMethodFrom(@NotNull PsiElement psiElement) {
         return (PsiMethod) ((PsiReferenceExpression) psiElement).resolve();
     }
 
