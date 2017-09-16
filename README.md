@@ -18,6 +18,13 @@ production code and you don't know it!
 With this plugin you know when you are using a beta or experimental piece of 
 code
 
+## Icons
+The icons used by this plugin are from the github markdown emoji markup. I 
+found in [this repo](https://gist.github.com/rxaviers/7360908) a complete list.
+
+For the detected `@Experimental` annotations the :boom: icon is used, and for
+the `@Beta` annotation the :fire: icon is used.
+
 ## License
 ```
 Copyright 2017 newhouse (nhitbh at gmail dot com)
