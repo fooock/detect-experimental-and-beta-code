@@ -5,7 +5,7 @@ This is an IntelliJ/Android Studio IDE plugin to detect the code with
 **@Experimental** and **@Beta** annotations and show a custom icon on the gutter
 when you use it.
 
-![Example](https://github.com/fooock/detect-experimental-and-beta-code/tree/master/media/example_with_rxjava.gif)
+![](media/example_with_rxjava.gif)
 
 ## Why would I want to use this plugin?
 We are developers, and we write hundreds of lines of code and use tons 
