@@ -14,28 +14,17 @@
  * limitations under the License.
  */
 
-buildscript {
-    repositories {
-        mavenCentral()
+package com.fooock.experimental.and.beta.icons;
+
+import org.junit.Test;
+
+/**
+ *
+ */
+public class LineMarkerTest {
+
+    @Test
+    public void testHasAnnotationsIsTrue() throws Exception {
+
     }
-}
-
-plugins {
-    id 'java'
-    id 'org.jetbrains.intellij' version '0.2.15'
-}
-
-sourceCompatibility = JavaVersion.VERSION_1_8
-targetCompatibility = JavaVersion.VERSION_1_8
-
-repositories {
-    mavenCentral()
-}
-
-dependencies {
-    testCompile 'junit:junit:4.12'
-}
-
-task wrapper(type: Wrapper) {
-    gradleVersion = '4.1'
 }

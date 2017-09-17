@@ -50,22 +50,31 @@ public final class LineMarker implements LineMarkerProvider {
     @Nullable
     @Override
     public LineMarkerInfo getLineMarkerInfo(@NotNull PsiElement psiElement) {
-        // check if the element is a field
-        if (isMethodParameters(psiElement)) {
-            final PsiParameter[] methodParams = getParametersFrom(psiElement);
-            for (PsiParameter parameter : methodParams) {
-                // detect annotation by parameter
-            }
-        }
-
         // check if the element is a reference with method. Note that if the method reference
         // find an annotation, this method don't continue, if not, check the method params
         if (isReferenceWithMethod(psiElement)) {
             final PsiMethod method = getMethodFrom(psiElement);
             final PsiAnnotation[] annotationsFromMethod = getAnnotationsFrom(method);
 
-            // if no annotations found return quickly!
+            // if no annotations found we check if the method has parameters and if these params
+            // are annotated or not
             if (!hasAnnotations(annotationsFromMethod)) {
+
+                // if annotations > 0 then check if the methods have annotations, if not then
+                // return nothing
+                if (isMethodParameters(method)) {
+                    final PsiParameter[] parameters = getParametersFrom(method);
+                    for (PsiParameter parameter : parameters) {
+                        // get the annotations by parameter
+                        final PsiAnnotation[] annotationsFromParam = getAnnotationsFrom(parameter);
+                        if (!hasAnnotations(annotationsFromParam)) {
+                            continue;
+                        }
+                        return getLineMarkerInfo(psiElement, annotationsFromParam);
+                    }
+                }
+                // the method doesn't have annotations and doesn't have
+                // any parameters, then return null
                 return null;
             }
             return getLineMarkerInfo(psiElement, annotationsFromMethod);
