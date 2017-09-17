@@ -22,11 +22,16 @@ buildscript {
 
 plugins {
     id 'java'
-    id 'org.jetbrains.intellij' version '0.2.15'
+    id 'org.jetbrains.intellij' version '0.2.17'
 }
 
 sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
+
+intellij {
+    version "2017.2.4"
+    updateSinceUntilBuild false
+}
 
 repositories {
     mavenCentral()

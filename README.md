@@ -32,6 +32,19 @@ into the Jetbrains plugin manager this plugin `Icons for Java annotations` and i
 > Note that at this moment the plugin is pending JetBrains approval. If you want to
 test it you need to install it manually!
 
+### Manual installation
+First clone this repo:
+```sh
+git clone https://github.com/fooock/detect-experimental-and-beta-code.git
+cd detect-experimental-and-beta-code
+```
+Build the plugin using gradle
+```sh
+./gradlew build
+```
+The compiled plugin is in the `build/libs` directory. Now open your IDE and go to `Settings -> Plugins -> Install plugin from disk...`
+and select the plugin. **Restart** your IDE.
+
 Do you have any question? [Ask here](https://github.com/fooock/detect-experimental-and-beta-code/issues)
 
 ## How it works?
