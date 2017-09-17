@@ -62,13 +62,10 @@ public final class LineMarker implements LineMarkerProvider {
                 // if annotations > 0 then check if the methods have annotations, if not then
                 // return nothing
                 if (isMethodParameters(method)) {
-                    final PsiParameter[] parameters = getParametersFrom(method);
-                    for (PsiParameter parameter : parameters) {
+                    for (PsiParameter parameter : getParametersFrom(method)) {
                         // get the annotations by parameter
                         final PsiAnnotation[] annotationsFromParam = getAnnotationsFrom(parameter);
-                        if (!hasAnnotations(annotationsFromParam)) {
-                            continue;
-                        }
+                        if (!hasAnnotations(annotationsFromParam)) continue;
                         return getLineMarkerInfo(psiElement, annotationsFromParam);
                     }
                 }
