@@ -33,7 +33,7 @@ repositories {
 }
 
 dependencies {
-    testCompile 'junit:juit:4.12'
+    testCompile 'junit:junit:4.12'
 }
 
 task wrapper(type: Wrapper) {
