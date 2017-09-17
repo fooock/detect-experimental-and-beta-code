@@ -25,6 +25,15 @@ production code and you don't know it!
 With this plugin you know when you are using a beta or experimental piece of 
 code
 
+## Install the plugin
+There are two methods to install this plugin. The first, clone this repo and build the plugin 
+jar to install it manually into the IDE. The second method, the recommended, search
+into the Jetbrains plugin manager this plugin `Icons for Java annotations` and install it
+> Note that at this moment the plugin is pending JetBrains approval. If you want to
+test it you need to install it manually!
+
+Do you have any question? [Ask here](https://github.com/fooock/detect-experimental-and-beta-code/issues)
+
 ## How it works?
 The operation of this plugin is very simple, it reads the code of the file that is currently
 open and if it finds an annotation that is called `Experimental` or `Beta` it paints an icon
