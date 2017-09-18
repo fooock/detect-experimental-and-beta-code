@@ -150,8 +150,8 @@ public final class LineMarker implements LineMarkerProvider {
      */
     @NotNull
     private LineMarkerInfo<PsiElement> createLineMarkerFor(@NotNull PsiElement element, @NotNull Icon icon) {
-        return new LineMarkerInfo<>(element, element.getTextRange(), icon, Pass.LINE_MARKERS,
-                null, null, GutterIconRenderer.Alignment.LEFT);
+        return new LineMarkerInfo<>(element, element.getTextRange(), icon, Pass.UPDATE_ALL,
+                null, null, GutterIconRenderer.Alignment.CENTER);
     }
 
     /**
