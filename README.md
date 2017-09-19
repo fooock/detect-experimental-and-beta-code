@@ -29,8 +29,14 @@ code
 There are two methods to install this plugin. The first, clone this repo and build the plugin 
 jar to install it manually into the IDE. The second method, the recommended, search
 into the Jetbrains plugin manager this plugin `Icons for Java annotations` and install it
-> Note that at this moment the plugin is pending JetBrains approval. If you want to
-test it you need to install it manually!
+> ~~Note that at this moment the plugin is pending JetBrains approval. If you want to
+test it you need to install it manually!~~
+
+### Automatic installation
+You can download the plugin using the Jetbrains plugin manager from your IntelliJ or
+Android Studio. Go to `Settings -> Plugins -> Browse repositories...` and search for 
+`Icons for Java annotations`. Install and restart. This is the recommended option. You can check the plugin page
+[here](https://plugins.jetbrains.com/plugin/10038-icons-for-java-annotations).
 
 ### Manual installation
 First clone this repo:
