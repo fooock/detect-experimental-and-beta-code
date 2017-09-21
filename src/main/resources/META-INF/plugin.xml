@@ -1,7 +1,7 @@
 <idea-plugin>
     <id>com.fooock.experimental.and.beta.icons</id>
     <name>Icons for Java annotations</name>
-    <version>1.0.1</version>
+    <version>1.0.4</version>
     <vendor email="nhitbh@gmail.com" url="https://github.com/fooock/detect-experimental-and-beta-code">fooock</vendor>
 
     <description><![CDATA[

@@ -75,6 +75,9 @@ public final class LineMarker implements LineMarkerProvider {
             }
             return getLineMarkerInfo(psiElement, annotationsFromMethod);
         }
+        if (psiElement instanceof PsiField) {
+            System.out.println("++++++++++ " + ((PsiField) psiElement).getName());
+        }
         return null;
     }
 
