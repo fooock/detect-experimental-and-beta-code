@@ -152,7 +152,7 @@ public final class LineMarker implements LineMarkerProvider {
      *
      * @param element Current element
      * @param icon    Icon for the required annotation
-     * @param type    Type of the line marker
+     * @param tooltip Type of the line marker
      * @return LineMarkerInfo
      */
     @NotNull
