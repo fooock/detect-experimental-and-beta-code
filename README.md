@@ -73,6 +73,7 @@ To create the gifs for this readme I used the online service from [cloudconvert]
 For the video record I use the [Icecream apps screen recorder](https://icecreamapps.com/Screen-Recorder/) application.
 Thanks!
 
+* [Petar Marijanović](https://github.com/PetarMarijanovic): Show tooltip text when on mouse hover  
 ## License
 ```
 Copyright 2017 newhouse (nhitbh at gmail dot com)
