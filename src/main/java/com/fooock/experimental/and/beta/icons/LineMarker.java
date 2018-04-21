@@ -22,7 +22,6 @@ import com.intellij.codeInsight.daemon.LineMarkerProvider;
 import com.intellij.openapi.editor.markup.GutterIconRenderer;
 import com.intellij.openapi.util.IconLoader;
 import com.intellij.psi.*;
-import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -41,11 +40,10 @@ public final class LineMarker implements LineMarkerProvider {
 
     private static final String EXPERIMENTAL_ANNOTATION_NAME = "Experimental";
     private static final String BETA_ANNOTATION_NAME = "Beta";
+    private static final String TOOLTIP = "This method is annotated as %s";
 
     private static final Icon ICON_EXPERIMENTAL_ANNOTATION = IconLoader.getIcon("/icons/explosion.png");
     private static final Icon ICON_BETA_ANNOTATION = IconLoader.getIcon("/icons/fire.png");
-
-    private static final String TOOLTIP = "This method is annotated as %s";
 
     private static final PsiAnnotation[] EMPTY_ANNOTATION_ARRAY = new PsiAnnotation[0];
 
