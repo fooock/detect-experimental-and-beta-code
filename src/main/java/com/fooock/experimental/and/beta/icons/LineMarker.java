@@ -44,6 +44,8 @@ public final class LineMarker implements LineMarkerProvider {
     private static final Icon ICON_EXPERIMENTAL_ANNOTATION = IconLoader.getIcon("/icons/explosion.png");
     private static final Icon ICON_BETA_ANNOTATION = IconLoader.getIcon("/icons/fire.png");
 
+    private static final String TOOLTIP = "This method is annotated as %s";
+
     private static final PsiAnnotation[] EMPTY_ANNOTATION_ARRAY = new PsiAnnotation[0];
 
     @Nullable
@@ -131,11 +133,13 @@ public final class LineMarker implements LineMarkerProvider {
     private LineMarkerInfo markerFromAnnotationName(@NotNull String annotationName, @NotNull PsiElement element) {
         if (EXPERIMENTAL_ANNOTATION_NAME.equals(annotationName)) {
             // here return the line marker with the specified experimental icon
-            return createLineMarkerFor(element, ICON_EXPERIMENTAL_ANNOTATION);
+            return createLineMarkerFor(element, ICON_EXPERIMENTAL_ANNOTATION,
+                    String.format(TOOLTIP, EXPERIMENTAL_ANNOTATION_NAME));
         }
         if (BETA_ANNOTATION_NAME.equals(annotationName)) {
             // here return the line marker with the specified beta icon
-            return createLineMarkerFor(element, ICON_BETA_ANNOTATION);
+            return createLineMarkerFor(element, ICON_BETA_ANNOTATION,
+                    String.format(TOOLTIP, BETA_ANNOTATION_NAME));
         }
         return null;
     }
@@ -149,9 +153,10 @@ public final class LineMarker implements LineMarkerProvider {
      * @return LineMarkerInfo
      */
     @NotNull
-    private LineMarkerInfo<PsiElement> createLineMarkerFor(@NotNull PsiElement element, @NotNull Icon icon) {
+    private LineMarkerInfo<PsiElement> createLineMarkerFor(
+            @NotNull PsiElement element, @NotNull Icon icon, @NotNull String tooltip) {
         return new LineMarkerInfo<>(element, element.getTextRange(), icon, Pass.UPDATE_ALL,
-                null, null, GutterIconRenderer.Alignment.CENTER);
+                psiElement -> tooltip, null, GutterIconRenderer.Alignment.CENTER);
     }
 
     /**
