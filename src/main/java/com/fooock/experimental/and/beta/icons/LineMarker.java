@@ -156,7 +156,7 @@ public final class LineMarker implements LineMarkerProvider {
                                                            @NotNull Icon icon,
                                                            @NotNull @NonNls String type) {
         return new LineMarkerInfo<>(element, element.getTextRange(), icon, Pass.LINE_MARKERS,
-                psiElement -> String.format("%s function %s detected", type, psiElement.getText()),
+                psiElement -> String.format("@%s function %s detected", type, psiElement.getText()),
                 null, GutterIconRenderer.Alignment.LEFT);
     }
 
