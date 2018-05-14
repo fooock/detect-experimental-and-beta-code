@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 newhouse <nhitbh at gmail dot com>
+ * Copyright (c) 2018 Javi <nhitbh at gmail dot com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,7 +24,7 @@ import org.junit.Test;
 public class LineMarkerTest {
 
     @Test
-    public void testHasAnnotationsIsTrue() throws Exception {
+    public void testHasAnnotationsIsTrue() {
 
     }
 }
