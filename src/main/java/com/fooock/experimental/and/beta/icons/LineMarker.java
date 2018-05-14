@@ -22,6 +22,7 @@ import com.intellij.codeInsight.daemon.LineMarkerProvider;
 import com.intellij.openapi.editor.markup.GutterIconRenderer;
 import com.intellij.openapi.util.IconLoader;
 import com.intellij.psi.*;
+import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -131,27 +132,32 @@ public final class LineMarker implements LineMarkerProvider {
     private LineMarkerInfo markerFromAnnotationName(@NotNull String annotationName, @NotNull PsiElement element) {
         if (EXPERIMENTAL_ANNOTATION_NAME.equals(annotationName)) {
             // here return the line marker with the specified experimental icon
-            return createLineMarkerFor(element, ICON_EXPERIMENTAL_ANNOTATION);
+            return createLineMarkerFor(element, ICON_EXPERIMENTAL_ANNOTATION, EXPERIMENTAL_ANNOTATION_NAME);
         }
         if (BETA_ANNOTATION_NAME.equals(annotationName)) {
             // here return the line marker with the specified beta icon
-            return createLineMarkerFor(element, ICON_BETA_ANNOTATION);
+            return createLineMarkerFor(element, ICON_BETA_ANNOTATION, BETA_ANNOTATION_NAME);
         }
         return null;
     }
 
     /**
      * Create the {@link LineMarkerInfo} for the given {@link PsiElement} with the required {@link Icon}. This
-     * method never return null. Note that the line marker is aligned always to the left
+     * method never return null. Note that the line marker is aligned always to the left. When the mouse is
+     * over the icon a tooltip indicating the name of the function and if is experimental or beta is shown
      *
      * @param element Current element
      * @param icon    Icon for the required annotation
+     * @param type    Type of the line marker
      * @return LineMarkerInfo
      */
     @NotNull
-    private LineMarkerInfo<PsiElement> createLineMarkerFor(@NotNull PsiElement element, @NotNull Icon icon) {
-        return new LineMarkerInfo<>(element, element.getTextRange(), icon, Pass.UPDATE_ALL,
-                null, null, GutterIconRenderer.Alignment.CENTER);
+    private LineMarkerInfo<PsiElement> createLineMarkerFor(@NotNull PsiElement element,
+                                                           @NotNull Icon icon,
+                                                           @NotNull @NonNls String type) {
+        return new LineMarkerInfo<>(element, element.getTextRange(), icon, Pass.LINE_MARKERS,
+                psiElement -> String.format("%s function %s detected", type, psiElement.getText()),
+                null, GutterIconRenderer.Alignment.LEFT);
     }
 
     /**
